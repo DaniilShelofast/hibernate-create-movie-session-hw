@@ -1,9 +1,9 @@
-package mate.academy.dao.impl;
+package mate.academy.dao;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import mate.academy.dao.MovieSessionDao;
+import java.util.Optional;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
@@ -41,14 +41,14 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = factory.openSession()) {
             Query<MovieSession> getOrderQuery = session.createQuery(
-                    "from MovieSession o left join fetch o.movies "
+                    "from MovieSession o left join fetch o.movie "
                             + "where o.id = :id", MovieSession.class
             );
             getOrderQuery.setParameter("id", id);
-            return getOrderQuery.getSingleResult();
+            return Optional.ofNullable(getOrderQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -61,7 +61,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
         try (Session session = factory.openSession()) {
             Query<MovieSession> getOrderQuery = session.createQuery(
                     "from MovieSession "
-                            + "o left join fetch o.movies "
+                            + "o left join fetch o.movie "
                             + "where o.id = :id "
                             + "and o.showTime >= :startOfDay "
                             + "and o.showTime < :endOfDay", MovieSession.class

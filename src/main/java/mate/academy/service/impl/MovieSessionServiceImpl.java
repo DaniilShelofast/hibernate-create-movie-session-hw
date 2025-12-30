@@ -2,6 +2,7 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -19,8 +20,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public MovieSession get(Long id) {
-        return movieSessionDao.get(id);
+    public Optional<MovieSession> get(Long id) {
+        return Optional.of(movieSessionDao.get(id).orElseThrow());
     }
 
     @Override

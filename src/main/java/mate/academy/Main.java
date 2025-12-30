@@ -29,6 +29,8 @@ public class Main {
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("first floor, room number five");
         cinemaHallService.add(cinemaHall);
+        System.out.println(cinemaHallService.get(cinemaHall.getId()));
+        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
@@ -36,7 +38,9 @@ public class Main {
         LocalDateTime localDateTime = LocalDateTime.of(2024, 1, 15, 14, 30);
         movieSession.setShowTime(localDateTime);
         movieSessionService.add(movieSession);
-        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
+        System.out.println(movieSessionService.get(movieSession.getId()));
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.of(2024, 1, 15)).forEach(System.out::println);
 
     }
 }
