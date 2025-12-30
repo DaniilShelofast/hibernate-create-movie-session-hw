@@ -62,7 +62,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
             Query<MovieSession> getOrderQuery = session.createQuery(
                     "from MovieSession "
                             + "o left join fetch o.movie "
-                            + "where o.id = :id "
+                            + "where o.movie.id = :id "
                             + "and o.showTime >= :startOfDay "
                             + "and o.showTime < :endOfDay", MovieSession.class
             );

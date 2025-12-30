@@ -42,9 +42,7 @@ public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
     public Optional<CinemaHall> get(Long id) {
         try (Session session = factory.openSession()) {
             Query<CinemaHall> getOrderQuery = session.createQuery(
-                    "from CinemaHall o left join fetch o.MovieSession "
-                            + "where o.id = :id", CinemaHall.class
-            );
+                    "from CinemaHall", CinemaHall.class);
             getOrderQuery.setParameter("id", id);
             return Optional.ofNullable(getOrderQuery.getSingleResult());
         } catch (Exception e) {
